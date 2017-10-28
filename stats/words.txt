@@ -4,3 +4,6 @@ verb:ringing
 noun:ball
 adjective:stupid
 verb:bouncing
+noun:phone
+adjective:smart
+verb:bouncing

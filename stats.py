@@ -25,21 +25,46 @@ def display_stats():
     counter = 1
     for x in sorted_lib_counts:
         if counter < 4:
-            #if len(sorted_lib_counts[x]) > 1:
-                #print('T{0}: '.format(counter), end='')
-                #for lib in sorted_lib_counts[x].values():
-                    #print('    ' + lib + ' - ' + x + ' time(s)')
-            #else:
-                #print(' {0}: {1} - {2} time(s)'.format(counter, sorted_lib_counts[x][0], x))
-
             path_parts = x.split('\\')
             file = path_parts[len(path_parts)-1]
             theme = path_parts[len(path_parts)-2]
             print(' {0} time(s): {1} -> {2}'.format(lib_counts[x], theme, file))
             counter += 1
-                
-    print('\n\nBelow are the top 5 most used words of each type:')
-    
+
+
+    types = set()
+    words = {} #string:list
+    with open(os.path.join(root, 'words.txt'), 'r') as wfile:
+        for line in wfile:
+            line = line.strip()
+            if len(line) > 0:
+                parts = line.split(':')
+                types.add(parts[0])
+                if parts[0] in words:
+                    words[parts[0]].append(parts[1])
+                else:
+                    words[parts[0]] = []
+                    words[parts[0]].append(parts[1])
+
+    print('\n\nBelow are the top 5 most used words of each type:\n')
+    for t in types:
+        print(t.center(30))
+        print('-'*30)
+
+        temp = [words[t].count(w) for w in words[t]]
+        freq = dict(list(zip(words[t], temp)))
+        sorted_freq = [(freq[key], key) for key in freq]
+        sorted_freq.sort()
+        sorted_freq.reverse()
+
+        counter = 1
+        for x in sorted_freq:
+            if counter < 4:
+                print(' {0} {1}'.format(x[0], x[1]))
+                #print(str(x))
+                counter += 1
+
+        print('\n\n')
     
 def invert_dictionary(dictionary):
     """ (dictionary) -> dictionary
