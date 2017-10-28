@@ -1,5 +1,6 @@
 import os
 import random
+import re
 
 def get_madlibs_folders(root):
     """ (string) -> list
@@ -63,5 +64,58 @@ def pick_random_madlib():
     libs = get_all_madlibs()
     return random.choice(libs)
 
-def parse_madlib(lib):
-    return False
+def get_madlib_text(lib):
+    """ (string) -> string
+
+    Preconditions:
+        lib is the full path to a text file in the correct madlib format
+
+    Returns the complete text of the madlib file.
+    """
+
+    text = ""
+    with open(lib, 'r') as f:
+        text = f.read()
+
+    return text
+
+def parse_madlib_words(lib):
+    """ (string) -> list
+
+    Preconditions:
+        lib is the full path to a text file in the correct madlib format
+
+    Parses the madlib and returns a list of the word types needed to
+    complete the madlib.
+    """
+
+    words = []
+    index = 0
+
+    text = get_madlib_text(lib)
+    if (len(text) > 0):
+        words = re.findall(r'\{{(.+?)\}}', text)
+
+    return words
+
+def generate_story(lib, inputs):
+    """ (string, list) -> string
+
+    Preconditions:
+        lib is the full path to a text file in the correct madlib format
+        inputs is a list with the words to replace in the text
+
+    Returns a string containing the entire text of the madlib with the
+    user inputted words instead of placeholders.
+    """
+
+    items = iter(str(el) for el in inputs)
+    story = ""
+    text = get_madlib_text(lib)
+    
+    if (len(text) > 0):
+        #code adapted from: https://stackoverflow.com/questions/13870996/easy-way-to-replace-placeholders-in-string-with-the-list-of-values
+        story = re.sub(r'\{{(.+?)\}}', lambda L: next(items), text)
+    
+    return story
+    

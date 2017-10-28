@@ -104,6 +104,7 @@ def madlib_menu(theme):
         choice = input('Enter your choice: ')
         if (choice in map(str, range(counter))):
             print('excellent choice', files[int(choice)-1])
+            inputs_menu(files[int(choice)-1])
             main_menu(False)
         else:
             print('You entered an invalid number. Please try again.')
@@ -111,6 +112,31 @@ def madlib_menu(theme):
     else:
         print('There are no MAD Libs available for that theme!')
         theme_menu()
+
+def inputs_menu(lib):
+    """ (string) -> NoneType
+
+    Preconditions:
+        lib is the full path to a madlib file
+
+    Prompts the user for all the word inputs to complete the madlib.
+    """
+
+    words = madlibs.parse_madlib_words(lib)
+    inputs = []
+    counter = 1
+    
+    if (len(words)) > 0:
+        for word in words:
+            inputs.append(input('(#{0} of {1}) Enter a/an {2}: '.format(counter, len(words), word.upper())))
+            counter += 1
+
+        print('\n\nYou\'re all done! Below is your story!\n\n')
+        story = madlibs.generate_story(lib, inputs)
+        print(story)
+    else:
+        print('Bummer! This MAD Lib is lame! There are no words to substitute!')
+                
 
 def about_menu():
     """ (none) -> NoneType
