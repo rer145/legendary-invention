@@ -1,0 +1,6 @@
+noun:phone
+adjective:smart
+verb:ringing
+noun:ball
+adjective:stupid
+verb:bouncing

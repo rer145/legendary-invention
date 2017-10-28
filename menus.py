@@ -126,7 +126,7 @@ def inputs_menu(lib):
     inputs = []
     counter = 1
     
-    if (len(words)) > 0:
+    if len(words) > 0:
         for word in words:
             inputs.append(input('(#{0} of {1}) Enter a/an {2}: '.format(counter, len(words), word.upper())))
             counter += 1
@@ -134,6 +134,7 @@ def inputs_menu(lib):
         print('\n\nYou\'re all done! Below is your story!\n\n')
         story = madlibs.generate_story(lib, inputs)
         print(story)
+        stats.log_stats(lib, words, inputs)
     else:
         print('Bummer! This MAD Lib is lame! There are no words to substitute!')
                 
