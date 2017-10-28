@@ -46,6 +46,7 @@ def main_menu(is_first_time):
         elif (choice == '2'):
             pick = madlibs.pick_random_madlib()
             print('Hooray! The program picked:', pick)
+            inputs_menu(pick)
             choice = ''
         elif (choice == '3'):
             print('auto-gen')
@@ -98,7 +99,8 @@ def madlib_menu(theme):
 
     if (len(files) > 0):
         for file in files:
-            print( '{0}) {1}'.format(counter, file[file.rfind('\\')+1:]))
+            words = madlibs.parse_madlib_words(file)
+            print( '{0}) {1} ({2} word(s))'.format(counter, file[file.rfind('\\')+1:], len(words)))
             counter += 1
     
         choice = input('Enter your choice: ')
@@ -128,7 +130,7 @@ def inputs_menu(lib):
     
     if len(words) > 0:
         for word in words:
-            inputs.append(input('(#{0} of {1}) Enter a/an {2}: '.format(counter, len(words), word.upper())))
+            inputs.append(input('(#{0} of {1}) Enter a/an {2}: '.format(counter, len(words), word.upper().replace('-', ' '))))
             counter += 1
 
         print('\n\nYou\'re all done! Below is your story!\n\n')

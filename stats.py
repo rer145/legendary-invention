@@ -59,7 +59,7 @@ def display_stats():
 
         counter = 1
         for x in sorted_freq:
-            if counter < 4:
+            if counter < 6:
                 print(' {0} {1}'.format(x[0], x[1]))
                 #print(str(x))
                 counter += 1

@@ -1,0 +1,15 @@
+noun:car
+noun:house
+noun:boat
+verb:run
+verb:swim
+verb:jump
+adjective:quick
+adjective:fast
+adjective:slow
+adjective:bright
+ing-verb:running
+ing-verb:swimming
+ing-verb:jumping
+noun-plural:cars
+noun-plural:computers
